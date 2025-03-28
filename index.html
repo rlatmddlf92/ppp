@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>리니에게</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .hidden { display: none; }
+    .fade-in {
+      animation: fadeIn 2s ease-in forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .typing {
+      border-right: 2px solid white;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<audio autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3" type="audio/mpeg">
+</audio>
+
+<div class="overlay" id="login-screen">
+  <h1>비밀번호를 입력해주세요</h1>
+  <input type="password" id="password" placeholder="비밀번호">
+  <button onclick="checkPassword()">확인</button>
+</div>
+
+<div class="overlay hidden" id="main-content">
+  <h2 class="typing" id="message"></h2>
+  <div id="gallery" class="hidden">
+    <p style="margin-top: 40px;">📸 우리 추억들</p>
+    <img src="https://via.placeholder.com/300x200?text=사진1" style="margin: 10px;">
+    <img src="https://via.placeholder.com/300x200?text=사진2" style="margin: 10px;">
+  </div>
+  <div class="hidden" id="final">
+    <h1>리니야, 나랑 결혼해줄래? 💍</h1>
+    <button onclick="yes()">✔️ 응</button>
+    <button onclick="no()">❌ 아니</button>
+  </div>
+</div>
+
+<script>
+  function checkPassword() {
+    const pw = document.getElementById('password').value;
+    if (pw === '기념일!') {
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('main-content').classList.remove('hidden');
+      showMessage();
+    } else {
+      alert('비밀번호가 틀렸어요 😢');
+    }
+  }
+
+  const text = "리니야,\n우리 함께한 시간 동안\n넌 내 삶의 가장 따뜻한 빛이었어.";
+  let i = 0;
+  function showMessage() {
+    const msg = document.getElementById('message');
+    msg.classList.add("fade-in");
+    const interval = setInterval(() => {
+      msg.textContent += text[i];
+      i++;
+      if (i >= text.length) {
+        clearInterval(interval);
+        setTimeout(() => document.getElementById('gallery').classList.remove('hidden'), 1000);
+        setTimeout(() => document.getElementById('final').classList.remove('hidden'), 3000);
+      }
+    }, 100);
+  }
+
+  function yes() {
+    alert("정말 고마워, 리니야. 앞으로 평생 함께하자 💖");
+  }
+
+  function no() {
+    alert("다시 생각해줘... 😭");
+  }
+</script>
+</body>
+</html>
